@@ -23,7 +23,7 @@ class Ball(GameObject):
         self.speed = 10
         item = canvas.create_oval(x-self.radius, y-self.radius,
                                   x+self.radius, y+self.radius,
-                                  fill=''white'')
+                                  fill='white')
         super(Ball, self).__init__(canvas, item)
 
     def update(self):

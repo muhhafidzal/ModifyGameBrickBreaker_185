@@ -1,6 +1,5 @@
 import tkinter as tk
 
-
 class GameObject(object):
     def __init__(self, canvas, item):
         self.canvas = canvas
@@ -15,12 +14,11 @@ class GameObject(object):
     def delete(self):
         self.canvas.delete(self.item)
 
-
 class Ball(GameObject):
     def __init__(self, canvas, x, y):
         self.radius = 10
         self.direction = [1, -1]
-        self.speed = 10
+        self.speed = 4
         item = canvas.create_oval(x-self.radius, y-self.radius,
                                   x+self.radius, y+self.radius,
                                   fill='white')
@@ -56,7 +54,6 @@ class Ball(GameObject):
             if isinstance(game_object, Brick):
                 game_object.hit()
 
-
 class Paddle(GameObject):
     def __init__(self, canvas, x, y):
         self.width = 80
@@ -80,7 +77,6 @@ class Paddle(GameObject):
             if self.ball is not None:
                 self.ball.move(offset, 0)
 
-
 class Brick(GameObject):
     COLORS = {1: '#e74c3c', 2: '#3498db', 3: '#222222'}
 
@@ -103,7 +99,6 @@ class Brick(GameObject):
         else:
             self.canvas.itemconfig(self.item,
                                    fill=Brick.COLORS[self.hits])
-
 
 class Game(tk.Frame):
     def __init__(self, master):
@@ -130,9 +125,9 @@ class Game(tk.Frame):
         self.setup_game()
         self.canvas.focus_set()
         self.canvas.bind('<Left>',
-                         lambda _: self.paddle.move(-10))
+                         lambda _: self.paddle.move(-20))
         self.canvas.bind('<Right>',
-                         lambda _: self.paddle.move(10))
+                         lambda _: self.paddle.move(20))
 
     def setup_game(self):
            self.add_ball()
@@ -186,15 +181,13 @@ class Game(tk.Frame):
                 self.after(1000, self.setup_game)
         else:
             self.ball.update()
-            self.after(50, self.game_loop)
+            self.after(16, self.game_loop)
 
     def check_collisions(self):
         ball_coords = self.ball.get_position()
         items = self.canvas.find_overlapping(*ball_coords)
         objects = [self.items[x] for x in items if x in self.items]
         self.ball.collide(objects)
-
-
 
 if __name__ == '__main__':
     root = tk.Tk()

@@ -111,7 +111,7 @@ class Game(tk.Frame):
         self.lives = 3
         self.width = 610
         self.height = 400
-        self.canvas = tk.Canvas(self, bg=''#aaaaff'',
+        self.canvas = tk.Canvas(self, bg='#aaaaff',
                                 width=self.width,
                                 height=self.height,)
         self.canvas.pack()
@@ -129,17 +129,17 @@ class Game(tk.Frame):
         self.hud = None
         self.setup_game()
         self.canvas.focus_set()
-        self.canvas.bind(''<Left>'',
+        self.canvas.bind('<Left>',
                          lambda _: self.paddle.move(-10))
-        self.canvas.bind(''<Right>'',
+        self.canvas.bind('<Right>',
                          lambda _: self.paddle.move(10))
 
     def setup_game(self):
            self.add_ball()
            self.update_lives_text()
            self.text = self.draw_text(300, 200,
-                                      ''Press Space to start'')
-           self.canvas.bind(''<space>'', lambda _: self.start_game())
+                                      'Press Space to start')
+           self.canvas.bind('<space>', lambda _: self.start_game())
 
     def add_ball(self):
         if self.ball is not None:
@@ -153,35 +153,35 @@ class Game(tk.Frame):
         brick = Brick(self.canvas, x, y, hits)
         self.items[brick.item] = brick
 
-    def draw_text(self, x, y, text, size=''40''):
-        font = (''Forte'', size)
+    def draw_text(self, x, y, text, size='40'):
+        font = ('Forte', size)
         return self.canvas.create_text(x, y, text=text,
                                        font=font)
 
     def update_lives_text(self):
-        text = ''Lives: %s'' % self.lives
+        text = 'Lives: %s' % self.lives
         if self.hud is None:
             self.hud = self.draw_text(50, 20, text, 15)
         else:
             self.canvas.itemconfig(self.hud, text=text)
 
     def start_game(self):
-        self.canvas.unbind(''<space>'')
+        self.canvas.unbind('<space>')
         self.canvas.delete(self.text)
         self.paddle.ball = None
         self.game_loop()
 
     def game_loop(self):
         self.check_collisions()
-        num_bricks = len(self.canvas.find_withtag(''brick''))
+        num_bricks = len(self.canvas.find_withtag('brick'))
         if num_bricks == 0: 
             self.ball.speed = None
-            self.draw_text(300, 200, ''You win!'')
+            self.draw_text(300, 200, 'You win!')
         elif self.ball.get_position()[3] >= self.height: 
             self.ball.speed = None
             self.lives -= 1
             if self.lives < 0:
-                self.draw_text(300, 200, ''You Lose!!! Game Over!'')
+                self.draw_text(300, 200, 'You Lose!!! Game Over!')
             else:
                 self.after(1000, self.setup_game)
         else:

@@ -196,8 +196,8 @@ class Game(tk.Frame):
 
 
 
-if __name__ == ''__main__'':
+if __name__ == '__main__':
     root = tk.Tk()
-    root.title(''Hello, Jarvis!'')
+    root.title('Hello, Jarvis!')
     game = Game(root)
     game.mainloop()
